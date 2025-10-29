@@ -27,7 +27,8 @@ public class Singer {
 
     private String name;
 
-    private int debut_year;
+    @Column(name = "debut_year")
+    private int debutyear;
 
     @OneToMany(mappedBy = "singer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Music> musics = new ArrayList<>();
@@ -35,6 +36,6 @@ public class Singer {
     @Builder
     public Singer(String name, int debut_year) {
         this.name = name;
-        this.debut_year = debut_year;
+        this.debutyear = debut_year;
     }
 }
