@@ -20,7 +20,7 @@ public class SingerService {
     public SingerResponse saveSinger(SingerRequest singerRequest) {
         Singer singer = Singer.builder()
                 .name(singerRequest.getName())
-                .debut_year(singerRequest.getDebut_year())
+                .debut_year(singerRequest.getDebutYear())
                 .build();
 
         singerRepository.save(singer);
@@ -29,10 +29,10 @@ public class SingerService {
     }
 
     @Transactional
-    public void deleteSinger(Long id) {
-        Singer singer = singerRepository.findById(id)
+    public void deleteSinger(Long singerId) {
+        Singer singer = singerRepository.findById(singerId)
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_SINGER_ID));
 
-        singerRepository.deleteById(id);
+        singerRepository.deleteById(singerId);
     }
 }

@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class MusicRequest {
-    private Long singer_id;
+    private Long singerId;
     private String title;
 }

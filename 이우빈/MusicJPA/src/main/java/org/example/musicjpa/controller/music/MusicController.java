@@ -29,19 +29,19 @@ public class MusicController {
         return ResponseEntity.status(HttpStatus.CREATED).body(musicService.saveMusic(musicRequest));
     }
 
-    @GetMapping("/{music_id}")
-    public ResponseEntity<MusicResponse> getMusic(@PathVariable Long music_id) {
-        return ResponseEntity.status(HttpStatus.OK).body(musicService.getMusic(music_id));
+    @GetMapping("/{musicId}")
+    public ResponseEntity<MusicResponse> getMusic(@PathVariable Long musicId) {
+        return ResponseEntity.status(HttpStatus.OK).body(musicService.getMusic(musicId));
     }
 
-    @PatchMapping("/{music_id}")
-    public ResponseEntity<MusicResponse> updateMusic(@PathVariable Long music_id, @RequestBody MusicRequest musicRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(musicService.updateMusic(music_id, musicRequest));
+    @PatchMapping("/{musicId}")
+    public ResponseEntity<MusicResponse> updateMusic(@PathVariable Long musicId, @RequestBody MusicRequest musicRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(musicService.updateMusic(musicId, musicRequest));
     }
 
-    @DeleteMapping("/{music_id}")
-    public ResponseEntity<MusicResponse> deleteMusic(@PathVariable Long music_id) {
-        musicService.deleteMusic(music_id);
+    @DeleteMapping("/{musicId}")
+    public ResponseEntity<MusicResponse> deleteMusic(@PathVariable Long musicId) {
+        musicService.deleteMusic(musicId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

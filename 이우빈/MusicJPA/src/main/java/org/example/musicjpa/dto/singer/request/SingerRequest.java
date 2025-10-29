@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class SingerRequest {
     private String name;
-    private int debut_year;
+    private int debutYear;
 }

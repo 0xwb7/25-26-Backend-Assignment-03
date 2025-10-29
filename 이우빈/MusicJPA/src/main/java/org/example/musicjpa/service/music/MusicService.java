@@ -23,7 +23,7 @@ public class MusicService {
 
     @Transactional
     public MusicResponse saveMusic(MusicRequest musicRequest) {
-        Singer singer = singerRepository.findById(musicRequest.getSinger_id())
+        Singer singer = singerRepository.findById(musicRequest.getSingerId())
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_SINGER_ID));
 
         Music music = Music.builder()
@@ -37,19 +37,19 @@ public class MusicService {
     }
 
     @Transactional(readOnly = true)
-    public MusicResponse getMusic(Long music_id) {
-        Music music = musicRepository.findById(music_id)
+    public MusicResponse getMusic(Long musicId) {
+        Music music = musicRepository.findById(musicId)
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_MUSIC_ID));
 
         return MusicResponse.musicInfo(music);
     }
 
     @Transactional
-    public MusicResponse updateMusic(Long music_id, MusicRequest musicRequest) {
-        Music music = musicRepository.findById(music_id)
+    public MusicResponse updateMusic(Long musicId, MusicRequest musicRequest) {
+        Music music = musicRepository.findById(musicId)
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_MUSIC_ID));
 
-        Singer singer = singerRepository.findById(musicRequest.getSinger_id())
+        Singer singer = singerRepository.findById(musicRequest.getSingerId())
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_SINGER_ID));
 
         music.updateMusic(musicRequest.getTitle(), singer);
