@@ -25,6 +25,7 @@ public class Singer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 10)
     private String name;
 
     @Column(name = "debut_year")
