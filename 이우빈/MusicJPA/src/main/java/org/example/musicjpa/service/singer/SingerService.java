@@ -20,7 +20,7 @@ public class SingerService {
     public SingerResponse saveSinger(SingerRequest singerRequest) {
         Singer singer = Singer.builder()
                 .name(singerRequest.getName())
-                .debut_year(singerRequest.getDebutYear())
+                .debutYear(singerRequest.getDebutYear())
                 .build();
 
         singerRepository.save(singer);
@@ -33,6 +33,6 @@ public class SingerService {
         Singer singer = singerRepository.findById(singerId)
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_SINGER_ID));
 
-        singerRepository.deleteById(singerId);
+        singerRepository.delete(singer);
     }
 }

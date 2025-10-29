@@ -8,14 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.musicjpa.domain.singer.Singer;
+import org.example.musicjpa.exception.ErrorCode;
+import org.example.musicjpa.exception.MusicException;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Music {
 
     @Id
@@ -31,12 +34,32 @@ public class Music {
 
     @Builder
     public Music(String title, Singer singer) {
+        if (title == null || title.isBlank()) {
+            throw new MusicException(ErrorCode.WRONG_TITLE_INPUT);
+        }
+
+        if (singer == null) {
+            throw new MusicException(ErrorCode.SINGER_REQUIRED);
+        }
+
         this.title = title;
         this.singer = singer;
     }
 
     public void updateMusic(String title, Singer singer) {
+        validate(title, singer);
+
         this.title = title;
         this.singer = singer;
+    }
+
+    private void validate(String title, Singer singer) {
+        if (title == null || title.isBlank()) {
+            throw new MusicException(ErrorCode.WRONG_TITLE_INPUT);
+        }
+
+        if (singer == null) {
+            throw new MusicException(ErrorCode.SINGER_REQUIRED);
+        }
     }
 }

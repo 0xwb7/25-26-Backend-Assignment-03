@@ -26,7 +26,7 @@ public class SingerController {
     }
 
     @DeleteMapping("/{singerId}")
-    public ResponseEntity<SingerResponse> deleteSinger(@PathVariable Long singerId) {
+    public ResponseEntity<Void> deleteSinger(@PathVariable Long singerId) {
         singerService.deleteSinger(singerId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

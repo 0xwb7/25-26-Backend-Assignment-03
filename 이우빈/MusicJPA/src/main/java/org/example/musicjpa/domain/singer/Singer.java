@@ -8,17 +8,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.musicjpa.domain.music.Music;
+import org.example.musicjpa.exception.ErrorCode;
+import org.example.musicjpa.exception.MusicException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Singer {
 
     @Id
@@ -35,8 +38,16 @@ public class Singer {
     private List<Music> musics = new ArrayList<>();
 
     @Builder
-    public Singer(String name, int debut_year) {
+    public Singer(String name, Integer debutYear) {
+        if (name == null || name.isBlank()) {
+            throw new MusicException(ErrorCode.WRONG_NAME_INPUT);
+        }
+
+        if (debutYear == null || debutYear <= 0) {
+            throw new MusicException(ErrorCode.WRONG_DEBUT_INPUT);
+        }
+
         this.name = name;
-        this.debutYear = debut_year;
+        this.debutYear = debutYear;
     }
 }

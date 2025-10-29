@@ -62,7 +62,7 @@ public class MusicService {
         Music music = musicRepository.findById(music_id)
                 .orElseThrow(() -> new MusicException(ErrorCode.WRONG_MUSIC_ID));
 
-        musicRepository.deleteById(music_id);
+        musicRepository.delete(music);
     }
 
     @Transactional(readOnly = true)

@@ -40,7 +40,7 @@ public class MusicController {
     }
 
     @DeleteMapping("/{musicId}")
-    public ResponseEntity<MusicResponse> deleteMusic(@PathVariable Long musicId) {
+    public ResponseEntity<Void> deleteMusic(@PathVariable Long musicId) {
         musicService.deleteMusic(musicId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
