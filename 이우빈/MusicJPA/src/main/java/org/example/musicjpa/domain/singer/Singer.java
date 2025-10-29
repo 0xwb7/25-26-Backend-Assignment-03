@@ -39,6 +39,13 @@ public class Singer {
 
     @Builder
     public Singer(String name, Integer debutYear) {
+        validate(name, debutYear);
+
+        this.name = name;
+        this.debutYear = debutYear;
+    }
+
+    private void validate(String name, Integer debutYear) {
         if (name == null || name.isBlank()) {
             throw new MusicException(ErrorCode.WRONG_NAME_INPUT);
         }
@@ -46,8 +53,5 @@ public class Singer {
         if (debutYear == null || debutYear <= 0) {
             throw new MusicException(ErrorCode.WRONG_DEBUT_INPUT);
         }
-
-        this.name = name;
-        this.debutYear = debutYear;
     }
 }
