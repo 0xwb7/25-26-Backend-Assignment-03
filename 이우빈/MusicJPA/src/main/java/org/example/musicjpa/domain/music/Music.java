@@ -34,13 +34,7 @@ public class Music {
 
     @Builder
     public Music(String title, Singer singer) {
-        if (title == null || title.isBlank()) {
-            throw new MusicException(ErrorCode.WRONG_TITLE_INPUT);
-        }
-
-        if (singer == null) {
-            throw new MusicException(ErrorCode.SINGER_REQUIRED);
-        }
+        validate(title, singer);
 
         this.title = title;
         this.singer = singer;
