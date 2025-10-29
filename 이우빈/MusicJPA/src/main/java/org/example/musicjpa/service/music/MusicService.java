@@ -5,6 +5,8 @@ import org.example.musicjpa.domain.music.Music;
 import org.example.musicjpa.domain.singer.Singer;
 import org.example.musicjpa.dto.music.request.MusicRequest;
 import org.example.musicjpa.dto.music.response.MusicResponse;
+import org.example.musicjpa.exception.ErrorCode;
+import org.example.musicjpa.exception.MusicException;
 import org.example.musicjpa.repository.music.MusicRepository;
 import org.example.musicjpa.repository.singer.SingerRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class MusicService {
     @Transactional
     public MusicResponse saveMusic(MusicRequest musicRequest) {
         Singer singer = singerRepository.findById(musicRequest.getSinger_id())
-                .orElseThrow(() -> new IllegalArgumentException("Singer not found"));
+                .orElseThrow(() -> new MusicException(ErrorCode.WRONG_SINGER_ID));
 
         Music music = Music.builder()
                 .singer(singer)
@@ -37,7 +39,7 @@ public class MusicService {
     @Transactional(readOnly = true)
     public MusicResponse getMusic(Long music_id) {
         Music music = musicRepository.findById(music_id)
-                .orElseThrow(() -> new IllegalArgumentException("Music not found"));
+                .orElseThrow(() -> new MusicException(ErrorCode.WRONG_MUSIC_ID));
 
         return MusicResponse.musicInfo(music);
     }
@@ -45,10 +47,10 @@ public class MusicService {
     @Transactional
     public MusicResponse updateMusic(Long music_id, MusicRequest musicRequest) {
         Music music = musicRepository.findById(music_id)
-                .orElseThrow(() -> new IllegalArgumentException("Music not found"));
+                .orElseThrow(() -> new MusicException(ErrorCode.WRONG_MUSIC_ID));
 
         Singer singer = singerRepository.findById(musicRequest.getSinger_id())
-                .orElseThrow(() -> new IllegalArgumentException("Singer not found"));
+                .orElseThrow(() -> new MusicException(ErrorCode.WRONG_SINGER_ID));
 
         music.updateMusic(musicRequest.getTitle(), singer);
 
@@ -58,7 +60,8 @@ public class MusicService {
     @Transactional
     public void deleteMusic(Long music_id) {
         Music music = musicRepository.findById(music_id)
-                .orElseThrow(() -> new IllegalArgumentException("no music"));
+                .orElseThrow(() -> new MusicException(ErrorCode.WRONG_MUSIC_ID));
+
         musicRepository.deleteById(music_id);
     }
 
