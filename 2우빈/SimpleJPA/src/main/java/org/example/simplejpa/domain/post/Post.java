@@ -52,6 +52,7 @@ public class Post {
     public void updatePost(User user, String title, String content) {
         validate(user, title, content);
 
+        this.user = user;
         this.title = title;
         this.content = content;
     }
