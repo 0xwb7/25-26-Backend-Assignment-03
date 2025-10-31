@@ -25,7 +25,7 @@ public class PostService {
     @Transactional
     public PostResponse savePost(PostRequest postRequest) {
         User user = userRepository.findById(postRequest.getUserId())
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
+                .orElseThrow(() -> new BadRequestException(ErrorMessage.WRONG_USER_ID));
 
         Post post = Post.builder()
                 .user(user)
