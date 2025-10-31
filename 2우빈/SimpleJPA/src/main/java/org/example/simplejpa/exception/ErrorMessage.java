@@ -7,7 +7,8 @@ public enum ErrorMessage {
     TITLE_REQUIRED("글 제목은 비어있을 수 없습니다."),
     CONTENT_REQUIRED("글 내용은 비어있을 수 없습니다."),
     WRONG_USER_ID("존재하지 않는 유저 ID입니다."),
-    WRONG_POST_ID("존재하지 않는 포스트입니다.");
+    WRONG_POST_ID("존재하지 않는 포스트입니다."),
+    ALREADY_EXIST_EMAIL("이미 존재하는 이메일입니다.");
 
     private final String message;
 

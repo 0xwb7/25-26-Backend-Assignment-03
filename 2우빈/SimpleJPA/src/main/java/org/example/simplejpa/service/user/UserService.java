@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.example.simplejpa.domain.user.User;
 import org.example.simplejpa.dto.user.request.UserRequest;
 import org.example.simplejpa.dto.user.response.UserResponse;
+import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 import org.example.simplejpa.repository.user.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +27,12 @@ public class UserService {
                 .email(userRequest.getEmail())
                 .build();
 
-        userRepository.save(user);
+        // @Column unique=true 에러 핸들링 500 -> 400
+        try {
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new BadRequestException(ErrorMessage.ALREADY_EXIST_EMAIL);
+        }
 
         return UserResponse.userInfo(user);
     }

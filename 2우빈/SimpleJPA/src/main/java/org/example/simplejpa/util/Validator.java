@@ -3,7 +3,6 @@ package org.example.simplejpa.util;
 import org.example.simplejpa.domain.user.User;
 import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
-import org.example.simplejpa.exception.PostException;
 
 public class Validator {
 
