@@ -1,7 +1,11 @@
 package org.example.simplejpa.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class PostException extends IllegalArgumentException {
-    public PostException(ErrorCode errorcode) {
-        super(errorcode.message());
+    public PostException(ErrorMessage errorMessage) {
+        super(errorMessage.message());
     }
 }

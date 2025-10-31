@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.simplejpa.domain.user.User;
 import org.example.simplejpa.dto.user.request.UserRequest;
 import org.example.simplejpa.dto.user.response.UserResponse;
-import org.example.simplejpa.exception.ErrorCode;
+import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 import org.example.simplejpa.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponse getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_USER_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
 
         return UserResponse.userInfo(user);
     }
@@ -49,7 +49,7 @@ public class UserService {
     @Transactional
     public void deleteUser(Long userId) {
         User user =  userRepository.findById(userId)
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_USER_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
 
         userRepository.delete(user);
     }

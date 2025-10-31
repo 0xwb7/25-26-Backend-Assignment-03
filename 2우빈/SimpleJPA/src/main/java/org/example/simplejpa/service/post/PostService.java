@@ -5,7 +5,7 @@ import org.example.simplejpa.domain.post.Post;
 import org.example.simplejpa.domain.user.User;
 import org.example.simplejpa.dto.post.request.PostRequest;
 import org.example.simplejpa.dto.post.response.PostResponse;
-import org.example.simplejpa.exception.ErrorCode;
+import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 import org.example.simplejpa.repository.post.PostRepository;
 import org.example.simplejpa.repository.user.UserRepository;
@@ -24,7 +24,7 @@ public class PostService {
     @Transactional
     public PostResponse savePost(PostRequest postRequest) {
         User user = userRepository.findById(postRequest.getUserId())
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_USER_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
 
         Post post = Post.builder()
                 .user(user)
@@ -40,7 +40,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostResponse getPost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_POST_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
 
         return PostResponse.postInfo(post);
     }
@@ -48,10 +48,10 @@ public class PostService {
     @Transactional
     public PostResponse updatePost(Long postId, PostRequest postRequest) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_POST_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
 
         User user = userRepository.findById(postRequest.getUserId())
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_USER_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
 
         post.updatePost(user, postRequest.getTitle(), postRequest.getContent());
 
@@ -69,7 +69,7 @@ public class PostService {
     @Transactional
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostException(ErrorCode.WRONG_POST_ID));
+                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
 
         postRepository.delete(post);
     }

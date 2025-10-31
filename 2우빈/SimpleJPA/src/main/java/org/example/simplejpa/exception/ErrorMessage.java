@@ -1,6 +1,6 @@
 package org.example.simplejpa.exception;
 
-public enum ErrorCode {
+public enum ErrorMessage {
     WRONG_NAME_INPUT("잘못된 이름입니다."),
     WRONG_EMAIL_INPUT("잘못된 이메일입니다."),
     USER_REQUIRED("유저 정보는 비어있을 수 없습니다."),
@@ -11,7 +11,7 @@ public enum ErrorCode {
 
     private final String message;
 
-    ErrorCode(String message) {
+    ErrorMessage(String message) {
         this.message = message;
     }
 

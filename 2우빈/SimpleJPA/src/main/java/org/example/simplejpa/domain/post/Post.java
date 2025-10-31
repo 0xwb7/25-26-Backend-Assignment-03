@@ -15,8 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.simplejpa.domain.user.User;
-import org.example.simplejpa.dto.post.request.PostRequest;
-import org.example.simplejpa.exception.ErrorCode;
+import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 
 @Entity
@@ -59,15 +58,15 @@ public class Post {
 
     private void validate(User user, String title, String content) {
         if (user == null) {
-            throw new PostException(ErrorCode.USER_REQUIRED);
+            throw new PostException(ErrorMessage.USER_REQUIRED);
         }
 
         if (title == null || title.isBlank()) {
-            throw new PostException(ErrorCode.TITLE_REQUIRED);
+            throw new PostException(ErrorMessage.TITLE_REQUIRED);
         }
 
         if (content == null || content.isBlank()) {
-            throw new PostException(ErrorCode.CONTENT_REQUIRED);
+            throw new PostException(ErrorMessage.CONTENT_REQUIRED);
         }
     }
 }

@@ -14,7 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.simplejpa.domain.post.Post;
-import org.example.simplejpa.exception.ErrorCode;
+import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 
 import java.util.ArrayList;
@@ -49,11 +49,11 @@ public class User {
 
     private void validate(String name, String email) {
         if (name == null || name.isBlank()) {
-            throw new PostException(ErrorCode.WRONG_NAME_INPUT);
+            throw new PostException(ErrorMessage.WRONG_NAME_INPUT);
         }
 
         if (email == null || email.isBlank()) {
-            throw new PostException(ErrorCode.WRONG_EMAIL_INPUT);
+            throw new PostException(ErrorMessage.WRONG_EMAIL_INPUT);
         }
     }
 }
