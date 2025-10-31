@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import org.example.simplejpa.domain.user.User;
 import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
+import org.example.simplejpa.util.Validator;
 
 @Entity
 @Getter
@@ -41,7 +42,7 @@ public class Post {
 
     @Builder
     public Post(User user, String title, String content) {
-        validate(user, title, content);
+        Validator.validatePost(user, title, content);
 
         this.user = user;
         this.title = title;
@@ -49,24 +50,10 @@ public class Post {
     }
 
     public void updatePost(User user, String title, String content) {
-        validate(user, title, content);
+        Validator.validatePost(user, title, content);
 
         this.user = user;
         this.title = title;
         this.content = content;
-    }
-
-    private void validate(User user, String title, String content) {
-        if (user == null) {
-            throw new PostException(ErrorMessage.USER_REQUIRED);
-        }
-
-        if (title == null || title.isBlank()) {
-            throw new PostException(ErrorMessage.TITLE_REQUIRED);
-        }
-
-        if (content == null || content.isBlank()) {
-            throw new PostException(ErrorMessage.CONTENT_REQUIRED);
-        }
     }
 }

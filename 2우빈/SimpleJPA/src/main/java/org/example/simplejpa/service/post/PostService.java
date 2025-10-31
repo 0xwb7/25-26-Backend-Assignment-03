@@ -5,6 +5,7 @@ import org.example.simplejpa.domain.post.Post;
 import org.example.simplejpa.domain.user.User;
 import org.example.simplejpa.dto.post.request.PostRequest;
 import org.example.simplejpa.dto.post.response.PostResponse;
+import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 import org.example.simplejpa.repository.post.PostRepository;
@@ -51,7 +52,7 @@ public class PostService {
                 .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
 
         User user = userRepository.findById(postRequest.getUserId())
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
+                .orElseThrow(() -> new BadRequestException(ErrorMessage.WRONG_USER_ID));
 
         post.updatePost(user, postRequest.getTitle(), postRequest.getContent());
 

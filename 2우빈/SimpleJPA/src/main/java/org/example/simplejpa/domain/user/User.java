@@ -14,8 +14,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.simplejpa.domain.post.Post;
+import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
+import org.example.simplejpa.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,19 +43,9 @@ public class User {
 
     @Builder
     public User(String name, String email) {
-        validate(name, email);
+        Validator.validateUser(name, email);
 
         this.name = name;
         this.email = email;
-    }
-
-    private void validate(String name, String email) {
-        if (name == null || name.isBlank()) {
-            throw new PostException(ErrorMessage.WRONG_NAME_INPUT);
-        }
-
-        if (email == null || email.isBlank()) {
-            throw new PostException(ErrorMessage.WRONG_EMAIL_INPUT);
-        }
     }
 }

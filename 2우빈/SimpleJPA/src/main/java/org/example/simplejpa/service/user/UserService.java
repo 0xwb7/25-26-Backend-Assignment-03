@@ -7,6 +7,7 @@ import org.example.simplejpa.dto.user.response.UserResponse;
 import org.example.simplejpa.exception.ErrorMessage;
 import org.example.simplejpa.exception.PostException;
 import org.example.simplejpa.repository.user.UserRepository;
+import org.example.simplejpa.util.Validator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ public class UserService {
                 .name(userRequest.getUsername())
                 .email(userRequest.getEmail())
                 .build();
-
+        Validator.validateUser(userRequest.getUsername(), user.getEmail());
         userRepository.save(user);
 
         return UserResponse.userInfo(user);
