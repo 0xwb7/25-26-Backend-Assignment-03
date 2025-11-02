@@ -4,6 +4,9 @@ spring:
     username: ${DB_USER_NAME}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
 
   jpa:
     hibernate:

@@ -3,7 +3,8 @@ package org.example.simplejpa.service.post;
 import lombok.RequiredArgsConstructor;
 import org.example.simplejpa.domain.post.Post;
 import org.example.simplejpa.domain.user.User;
-import org.example.simplejpa.dto.post.request.PostRequest;
+import org.example.simplejpa.dto.post.request.PostCreateRequest;
+import org.example.simplejpa.dto.post.request.PostUpdateRequest;
 import org.example.simplejpa.dto.post.response.PostResponse;
 import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
@@ -23,14 +24,14 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public PostResponse savePost(PostRequest postRequest) {
-        User user = userRepository.findById(postRequest.getUserId())
+    public PostResponse savePost(PostCreateRequest postCreateRequest) {
+        User user = userRepository.findById(postCreateRequest.getUserId())
                 .orElseThrow(() -> new BadRequestException(ErrorMessage.WRONG_USER_ID));
 
         Post post = Post.builder()
                 .user(user)
-                .title(postRequest.getTitle())
-                .content(postRequest.getContent())
+                .title(postCreateRequest.getTitle())
+                .content(postCreateRequest.getContent())
                 .build();
 
         postRepository.save(post);
@@ -47,14 +48,11 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse updatePost(Long postId, PostRequest postRequest) {
+    public PostResponse updatePost(Long postId, PostUpdateRequest postUpdateRequest) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.WRONG_POST_ID));
 
-        User user = userRepository.findById(postRequest.getUserId())
-                .orElseThrow(() -> new BadRequestException(ErrorMessage.WRONG_USER_ID));
-
-        post.updatePost(user, postRequest.getTitle(), postRequest.getContent());
+        post.updatePost(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
 
         return PostResponse.postInfo(post);
     }
