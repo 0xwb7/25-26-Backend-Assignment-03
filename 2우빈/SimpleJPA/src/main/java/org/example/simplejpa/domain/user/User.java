@@ -14,10 +14,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.simplejpa.domain.post.Post;
-import org.example.simplejpa.exception.BadRequestException;
-import org.example.simplejpa.exception.ErrorMessage;
-import org.example.simplejpa.exception.PostException;
-import org.example.simplejpa.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, length = 20)
-    private String name;
+    private String username;
 
     @Column(nullable = false, length = 50, unique = true)
     private String email;
@@ -42,10 +38,8 @@ public class User {
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public User(String name, String email) {
-        Validator.validateUser(name, email);
-
-        this.name = name;
+    public User(String username, String email) {
+        this.username = username;
         this.email = email;
     }
 }

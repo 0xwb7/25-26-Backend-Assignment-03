@@ -1,5 +1,6 @@
 package org.example.simplejpa.controller.user;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.simplejpa.dto.user.request.UserRequest;
 import org.example.simplejpa.dto.user.response.UserResponse;
@@ -24,7 +25,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> saveUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> saveUser(@Valid @RequestBody UserRequest userRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userRequest));
     }
 

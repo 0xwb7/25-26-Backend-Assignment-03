@@ -14,7 +14,7 @@ public class UserResponse {
     public static UserResponse userInfo(User user) {
         return UserResponse.builder()
                 .userId(user.getId())
-                .username(user.getName())
+                .username(user.getUsername())
                 .email(user.getEmail())
                 .build();
     }

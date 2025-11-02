@@ -6,7 +6,7 @@ import org.example.simplejpa.dto.user.request.UserRequest;
 import org.example.simplejpa.dto.user.response.UserResponse;
 import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
-import org.example.simplejpa.exception.PostException;
+import org.example.simplejpa.exception.NotFoundException;
 import org.example.simplejpa.repository.user.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,14 @@ public class UserService {
     @Transactional
     public UserResponse saveUser(UserRequest userRequest) {
         User user = User.builder()
-                .name(userRequest.getUsername())
+                .username(userRequest.getUsername())
                 .email(userRequest.getEmail())
                 .build();
 
         // @Column unique=true 에러 핸들링 500 -> 400
         try {
             userRepository.save(user);
+            userRepository.flush();
         } catch (DataIntegrityViolationException e) {
             throw new BadRequestException(ErrorMessage.ALREADY_EXIST_EMAIL);
         }
@@ -40,7 +41,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponse getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.WRONG_USER_ID));
 
         return UserResponse.userInfo(user);
     }
@@ -55,8 +56,8 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long userId) {
-        User user =  userRepository.findById(userId)
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_USER_ID));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.WRONG_USER_ID));
 
         userRepository.delete(user);
     }

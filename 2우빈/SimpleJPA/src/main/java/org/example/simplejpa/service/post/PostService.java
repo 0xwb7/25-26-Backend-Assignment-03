@@ -7,7 +7,7 @@ import org.example.simplejpa.dto.post.request.PostRequest;
 import org.example.simplejpa.dto.post.response.PostResponse;
 import org.example.simplejpa.exception.BadRequestException;
 import org.example.simplejpa.exception.ErrorMessage;
-import org.example.simplejpa.exception.PostException;
+import org.example.simplejpa.exception.NotFoundException;
 import org.example.simplejpa.repository.post.PostRepository;
 import org.example.simplejpa.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostResponse getPost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.WRONG_POST_ID));
 
         return PostResponse.postInfo(post);
     }
@@ -49,7 +49,7 @@ public class PostService {
     @Transactional
     public PostResponse updatePost(Long postId, PostRequest postRequest) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.WRONG_POST_ID));
 
         User user = userRepository.findById(postRequest.getUserId())
                 .orElseThrow(() -> new BadRequestException(ErrorMessage.WRONG_USER_ID));
@@ -70,7 +70,7 @@ public class PostService {
     @Transactional
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostException(ErrorMessage.WRONG_POST_ID));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.WRONG_POST_ID));
 
         postRepository.delete(post);
     }

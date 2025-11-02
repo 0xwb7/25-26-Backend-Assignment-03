@@ -15,9 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.simplejpa.domain.user.User;
-import org.example.simplejpa.exception.ErrorMessage;
-import org.example.simplejpa.exception.PostException;
-import org.example.simplejpa.util.Validator;
 
 @Entity
 @Getter
@@ -42,17 +39,12 @@ public class Post {
 
     @Builder
     public Post(User user, String title, String content) {
-        Validator.validatePost(user, title, content);
-
         this.user = user;
         this.title = title;
         this.content = content;
     }
 
     public void updatePost(User user, String title, String content) {
-        Validator.validatePost(user, title, content);
-
-        this.user = user;
         this.title = title;
         this.content = content;
     }

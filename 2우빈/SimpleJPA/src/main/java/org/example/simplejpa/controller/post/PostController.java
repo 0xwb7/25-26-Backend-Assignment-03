@@ -1,5 +1,6 @@
 package org.example.simplejpa.controller.post;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.simplejpa.dto.post.request.PostRequest;
 import org.example.simplejpa.dto.post.response.PostResponse;
@@ -25,7 +26,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<PostResponse> savePost(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<PostResponse> savePost(@Valid @RequestBody PostRequest postRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.savePost(postRequest));
     }
 
@@ -35,7 +36,7 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId, @RequestBody PostRequest postRequest) {
+    public ResponseEntity<PostResponse> updatePost(@Valid @PathVariable Long postId, @Valid @RequestBody PostRequest postRequest) {
         return ResponseEntity.ok(postService.updatePost(postId, postRequest));
     }
 
