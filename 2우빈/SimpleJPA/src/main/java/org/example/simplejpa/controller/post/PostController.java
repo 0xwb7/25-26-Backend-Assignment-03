@@ -31,12 +31,12 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long postId) {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.getPost(postId));
+        return ResponseEntity.ok(postService.getPost(postId));
     }
 
     @PatchMapping("/{postId}")
     public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId, @RequestBody PostRequest postRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.updatePost(postId, postRequest));
+        return ResponseEntity.ok(postService.updatePost(postId, postRequest));
     }
 
     @DeleteMapping("/{postId}")
@@ -47,6 +47,6 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> getAllPosts() {
-        return ResponseEntity.status(HttpStatus.OK).body(postService.getAllPosts());
+        return ResponseEntity.ok(postService.getAllPosts());
     }
 }
